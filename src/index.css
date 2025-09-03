@@ -1,0 +1,640 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Inter', sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+.gradient-text {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.glow-effect {
+  box-shadow: 0 0 20px rgba(102, 126, 234, 0.3);
+}
+
+.card-hover {
+  transition: all 0.3s ease;
+}
+
+.card-hover:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+}
+
+/* Custom Animations */
+@keyframes drop-in {
+  0% {
+    transform: translateY(-100px) scale(0.8);
+    opacity: 0;
+  }
+  50% {
+    transform: translateY(10px) scale(1.05);
+    opacity: 0.8;
+  }
+  100% {
+    transform: translateY(0) scale(1);
+    opacity: 1;
+  }
+}
+
+@keyframes scary-float {
+  0%, 100% {
+    transform: translateY(0px) rotate(-2deg);
+  }
+  50% {
+    transform: translateY(-15px) rotate(2deg);
+  }
+}
+
+@keyframes scary-glow {
+  0%, 100% {
+    opacity: 0.8;
+    box-shadow: 0 0 10px rgba(239, 68, 68, 0.5);
+  }
+  50% {
+    opacity: 1;
+    box-shadow: 0 0 20px rgba(239, 68, 68, 0.8);
+  }
+}
+
+@keyframes wisp {
+  0%, 100% {
+    transform: translateX(0px) scaleY(1);
+    opacity: 0.7;
+  }
+  50% {
+    transform: translateX(5px) scaleY(1.2);
+    opacity: 0.9;
+  }
+}
+
+@keyframes scary-arms {
+  0%, 100% {
+    transform: rotate(0deg) translateY(0px);
+  }
+  50% {
+    transform: rotate(10deg) translateY(-5px);
+  }
+}
+
+@keyframes float-scary {
+  0%, 100% {
+    transform: translateY(0px) rotate(0deg) scale(1);
+    opacity: 0.8;
+  }
+  50% {
+    transform: translateY(-15px) rotate(180deg) scale(1.2);
+    opacity: 1;
+  }
+}
+
+@keyframes matrix {
+  0% {
+    background-position: 0 0;
+    box-shadow: inset 0 0 50px rgba(255, 0, 0, 0.5);
+  }
+  50% {
+    background-position: 100% 100%;
+    box-shadow: inset 0 0 60px rgba(255, 0, 0, 0.7);
+  }
+  100% {
+    background-position: 0 0;
+    box-shadow: inset 0 0 50px rgba(255, 0, 0, 0.5);
+  }
+}
+
+@keyframes glitch {
+  0%, 100% {
+    transform: translateX(0px);
+    opacity: 1;
+  }
+  10% {
+    transform: translateX(-2px);
+    opacity: 0.8;
+  }
+  20% {
+    transform: translateX(2px);
+    opacity: 1;
+  }
+  30% {
+    transform: translateX(-1px);
+    opacity: 0.9;
+  }
+  40% {
+    transform: translateX(1px);
+    opacity: 0.7;
+  }
+  50% {
+    transform: translateX(0px);
+    opacity: 1;
+  }
+}
+
+.animate-drop-in {
+  animation: drop-in 1.5s cubic-bezier(0.68, -0.55, 0.265, 1.55) forwards;
+}
+
+.animate-scary-float {
+  animation: scary-float 3s ease-in-out infinite;
+}
+
+.animate-scary-glow {
+  animation: scary-glow 2s ease-in-out infinite;
+}
+
+.animate-wisp {
+  animation: wisp 2.5s ease-in-out infinite;
+}
+
+.animate-scary-arms {
+  animation: scary-arms 2s ease-in-out infinite;
+}
+
+.animate-float-scary {
+  animation: float-scary 4s ease-in-out infinite;
+}
+
+.animate-glitch {
+  animation: glitch 3s ease-in-out infinite;
+}
+
+/* Page Opening Animations */
+@keyframes fade-in {
+  0% {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes fade-in-scale {
+  0% {
+    opacity: 0;
+    transform: scale(0.8) translateY(20px);
+  }
+  50% {
+    opacity: 0.5;
+    transform: scale(1.05) translateY(-5px);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+  }
+}
+
+@keyframes slide-in-from-top {
+  0% {
+    opacity: 0;
+    transform: translateY(-50px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-fade-in {
+  animation: fade-in 1.2s ease-out forwards;
+}
+
+.animate-fade-in-scale {
+  animation: fade-in-scale 1.8s cubic-bezier(0.68, -0.55, 0.265, 1.55) forwards;
+}
+
+.animate-slide-in-from-top {
+  animation: slide-in-from-top 1s ease-out forwards;
+}
+
+/* Ghost Circular Movement Animation - Mobile Safe Circle */
+@keyframes ghost-circular-journey-mobile {
+  0% {
+    transform: translate(-50%, -50%) translateX(0px) translateY(-120px) rotate(0deg);
+    opacity: 1;
+  }
+  12.5% {
+    transform: translate(-50%, -50%) translateX(85px) translateY(-85px) rotate(45deg);
+    opacity: 1;
+  }
+  25% {
+    transform: translate(-50%, -50%) translateX(120px) translateY(0px) rotate(90deg);
+    opacity: 1;
+  }
+  37.5% {
+    transform: translate(-50%, -50%) translateX(85px) translateY(85px) rotate(135deg);
+    opacity: 1;
+  }
+  50% {
+    transform: translate(-50%, -50%) translateX(0px) translateY(120px) rotate(180deg);
+    opacity: 1;
+  }
+  62.5% {
+    transform: translate(-50%, -50%) translateX(-85px) translateY(85px) rotate(225deg);
+    opacity: 1;
+  }
+  75% {
+    transform: translate(-50%, -50%) translateX(-120px) translateY(0px) rotate(270deg);
+    opacity: 1;
+  }
+  87.5% {
+    transform: translate(-50%, -50%) translateX(-85px) translateY(-85px) rotate(315deg);
+    opacity: 0.8;
+  }
+  100% {
+    transform: translate(-50%, -50%) translateX(0px) translateY(-120px) rotate(360deg);
+    opacity: 0;
+  }
+}
+
+/* Ghost Circular Movement Animation - Tablet Circle */
+@keyframes ghost-circular-journey-tablet {
+  0% {
+    transform: translate(-50%, -50%) translateX(0px) translateY(-180px) rotate(0deg);
+    opacity: 1;
+  }
+  12.5% {
+    transform: translate(-50%, -50%) translateX(127px) translateY(-127px) rotate(45deg);
+    opacity: 1;
+  }
+  25% {
+    transform: translate(-50%, -50%) translateX(180px) translateY(0px) rotate(90deg);
+    opacity: 1;
+  }
+  37.5% {
+    transform: translate(-50%, -50%) translateX(127px) translateY(127px) rotate(135deg);
+    opacity: 1;
+  }
+  50% {
+    transform: translate(-50%, -50%) translateX(0px) translateY(180px) rotate(180deg);
+    opacity: 1;
+  }
+  62.5% {
+    transform: translate(-50%, -50%) translateX(-127px) translateY(127px) rotate(225deg);
+    opacity: 1;
+  }
+  75% {
+    transform: translate(-50%, -50%) translateX(-180px) translateY(0px) rotate(270deg);
+    opacity: 1;
+  }
+  87.5% {
+    transform: translate(-50%, -50%) translateX(-127px) translateY(-127px) rotate(315deg);
+    opacity: 0.8;
+  }
+  100% {
+    transform: translate(-50%, -50%) translateX(0px) translateY(-180px) rotate(360deg);
+    opacity: 0;
+  }
+}
+
+/* Ghost Circular Movement Animation - Desktop Large Circle */
+@keyframes ghost-circular-journey-desktop {
+  0% {
+    transform: translate(-50%, -50%) translateX(0px) translateY(-250px) rotate(0deg);
+    opacity: 1;
+  }
+  12.5% {
+    transform: translate(-50%, -50%) translateX(177px) translateY(-177px) rotate(45deg);
+    opacity: 1;
+  }
+  25% {
+    transform: translate(-50%, -50%) translateX(250px) translateY(0px) rotate(90deg);
+    opacity: 1;
+  }
+  37.5% {
+    transform: translate(-50%, -50%) translateX(177px) translateY(177px) rotate(135deg);
+    opacity: 1;
+  }
+  50% {
+    transform: translate(-50%, -50%) translateX(0px) translateY(250px) rotate(180deg);
+    opacity: 1;
+  }
+  62.5% {
+    transform: translate(-50%, -50%) translateX(-177px) translateY(177px) rotate(225deg);
+    opacity: 1;
+  }
+  75% {
+    transform: translate(-50%, -50%) translateX(-250px) translateY(0px) rotate(270deg);
+    opacity: 1;
+  }
+  87.5% {
+    transform: translate(-50%, -50%) translateX(-177px) translateY(-177px) rotate(315deg);
+    opacity: 0.8;
+  }
+  100% {
+    transform: translate(-50%, -50%) translateX(0px) translateY(-250px) rotate(360deg);
+    opacity: 0;
+  }
+}
+
+/* Responsive Ghost Animation Classes */
+.animate-ghost-random-journey {
+  animation: ghost-circular-journey-mobile 4s ease-in-out forwards;
+}
+
+/* Tablet and larger screens */
+@media (min-width: 768px) {
+  .animate-ghost-random-journey {
+    animation: ghost-circular-journey-tablet 4s ease-in-out forwards;
+  }
+}
+
+/* Desktop and larger screens */
+@media (min-width: 1024px) {
+  .animate-ghost-random-journey {
+    animation: ghost-circular-journey-desktop 4s ease-in-out forwards;
+  }
+}
+
+/* Ghost Message Whispering Animation */
+@keyframes ghost-whisper {
+  0% {
+    opacity: 0;
+    transform: translateY(15px) scale(0.7) rotateX(10deg);
+    filter: blur(2px);
+  }
+  20% {
+    opacity: 0.3;
+    transform: translateY(8px) scale(0.85) rotateX(5deg);
+    filter: blur(1px);
+  }
+  40% {
+    opacity: 0.7;
+    transform: translateY(2px) scale(0.95) rotateX(2deg);
+    filter: blur(0.5px);
+  }
+  60% {
+    opacity: 0.9;
+    transform: translateY(-1px) scale(1.02) rotateX(-1deg);
+    filter: blur(0px);
+  }
+  80% {
+    opacity: 0.8;
+    transform: translateY(1px) scale(1) rotateX(0deg);
+    filter: blur(0px);
+  }
+  100% {
+    opacity: 0.85;
+    transform: translateY(0px) scale(1) rotateX(0deg);
+    filter: blur(0px);
+  }
+}
+
+@keyframes whisper-float {
+  0%, 100% {
+    transform: translateY(0px) translateX(0px) scale(1);
+    opacity: 0.85;
+  }
+  25% {
+    transform: translateY(-2px) translateX(1px) scale(1.01);
+    opacity: 0.9;
+  }
+  50% {
+    transform: translateY(1px) translateX(-1px) scale(0.99);
+    opacity: 0.8;
+  }
+  75% {
+    transform: translateY(-1px) translateX(1px) scale(1.005);
+    opacity: 0.88;
+  }
+}
+
+@keyframes whisper-glow {
+  0%, 100% {
+    text-shadow: 0 0 5px rgba(239, 68, 68, 0.3), 0 0 10px rgba(239, 68, 68, 0.2);
+  }
+  50% {
+    text-shadow: 0 0 8px rgba(239, 68, 68, 0.5), 0 0 15px rgba(239, 68, 68, 0.3), 0 0 20px rgba(239, 68, 68, 0.1);
+  }
+}
+
+@keyframes whisper-bubble-float {
+  0%, 100% {
+    transform: translateY(0px) scale(1);
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3), 0 0 20px rgba(239, 68, 68, 0.2);
+  }
+  50% {
+    transform: translateY(-3px) scale(1.02);
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.4), 0 0 25px rgba(239, 68, 68, 0.3);
+  }
+}
+
+.animate-ghost-message {
+  animation: ghost-whisper 1.2s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards,
+             whisper-float 3s ease-in-out infinite 1.2s,
+             whisper-bubble-float 2s ease-in-out infinite 1.2s;
+}
+
+.animate-ghost-message p {
+  animation: whisper-glow 2.5s ease-in-out infinite 1.2s;
+}
+
+/* Scroll-triggered Ghost Animation */
+@keyframes scroll-ghost-appear {
+  0% {
+    transform: translateX(-100px) translateY(50px) rotate(-20deg) scale(0.5);
+    opacity: 0;
+  }
+  10% {
+    transform: translateX(80px) translateY(-30px) rotate(15deg) scale(0.8);
+    opacity: 0.7;
+  }
+  20% {
+    transform: translateX(-60px) translateY(70px) rotate(-25deg) scale(1);
+    opacity: 1;
+  }
+  30% {
+    transform: translateX(120px) translateY(20px) rotate(30deg) scale(0.9);
+    opacity: 1;
+  }
+  40% {
+    transform: translateX(-40px) translateY(-50px) rotate(-15deg) scale(1.1);
+    opacity: 1;
+  }
+  50% {
+    transform: translateX(90px) translateY(60px) rotate(20deg) scale(0.8);
+    opacity: 1;
+  }
+  60% {
+    transform: translateX(-80px) translateY(-20px) rotate(-30deg) scale(1);
+    opacity: 1;
+  }
+  70% {
+    transform: translateX(50px) translateY(40px) rotate(10deg) scale(0.9);
+    opacity: 1;
+  }
+  80% {
+    transform: translateX(-30px) translateY(-40px) rotate(-10deg) scale(1);
+    opacity: 0.8;
+  }
+  90% {
+    transform: translateX(20px) translateY(30px) rotate(5deg) scale(0.7);
+    opacity: 0.5;
+  }
+  100% {
+    transform: translateX(0px) translateY(0px) rotate(0deg) scale(0.3);
+    opacity: 0;
+  }
+}
+
+.animate-scroll-ghost-appear {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  animation: scroll-ghost-appear 2s ease-in-out forwards;
+}
+
+/* Peeking Ghost Animation - Desktop Only */
+@keyframes peek-ghost {
+  0% {
+    transform: translateX(-100%) translateY(-50%);
+    opacity: 0;
+  }
+  10% {
+    transform: translateX(-80%) translateY(-50%);
+    opacity: 0.3;
+  }
+  20% {
+    transform: translateX(-60%) translateY(-50%);
+    opacity: 0.6;
+  }
+  30% {
+    transform: translateX(-50%) translateY(-50%);
+    opacity: 0.8;
+  }
+  70% {
+    transform: translateX(-50%) translateY(-50%);
+    opacity: 0.8;
+  }
+  80% {
+    transform: translateX(-60%) translateY(-50%);
+    opacity: 0.6;
+  }
+  90% {
+    transform: translateX(-80%) translateY(-50%);
+    opacity: 0.3;
+  }
+  100% {
+    transform: translateX(-100%) translateY(-50%);
+    opacity: 0;
+  }
+}
+
+@keyframes peek-ghost-eye-blink {
+  0%, 90%, 100% {
+    opacity: 1;
+  }
+  95% {
+    opacity: 0;
+  }
+}
+
+@keyframes peek-ghost-curious {
+  0%, 100% {
+    transform: translateX(-50%) translateY(-50%) rotate(0deg);
+  }
+  25% {
+    transform: translateX(-50%) translateY(-50%) rotate(2deg);
+  }
+  75% {
+    transform: translateX(-50%) translateY(-50%) rotate(-2deg);
+  }
+}
+
+.animate-peek-ghost {
+  animation: peek-ghost 8s ease-in-out infinite,
+             peek-ghost-curious 3s ease-in-out infinite 2s;
+}
+
+.animate-peek-ghost .animate-scary-glow {
+  animation: scary-glow 2s ease-in-out infinite,
+             peek-ghost-eye-blink 4s ease-in-out infinite 3s;
+}/* W
+aving Ghost Animation from Left Corner */
+@keyframes wave-hello {
+  0% {
+    transform: translateX(-100px) translateY(-50%);
+    opacity: 0;
+  }
+  100% {
+    transform: translateX(50px) translateY(-50%);
+    opacity: 1;
+  }
+}
+
+@keyframes wave-hand {
+  0%, 100% {
+    transform: rotate(0deg) translateY(0px);
+  }
+  25% {
+    transform: rotate(-20deg) translateY(-3px);
+  }
+  50% {
+    transform: rotate(20deg) translateY(-5px);
+  }
+  75% {
+    transform: rotate(-15deg) translateY(-2px);
+  }
+}
+
+.animate-wave-hello {
+  animation: wave-hello 3s ease-in-out forwards;
+}
+
+.animate-wave-hand {
+  animation: wave-hand 0.5s ease-in-out infinite;
+}/* Wave 
+Hello Right Animation */
+@keyframes wave-hello-right {
+  0% {
+    transform: translateX(100px) translateY(-50%);
+    opacity: 0;
+  }
+  100% {
+    transform: translateX(-50px) translateY(-50%);
+    opacity: 1;
+  }
+}
+
+/* Backflip Animation */
+@keyframes backflip {
+  0% {
+    transform: translateX(-50px) translateY(-50%) rotateY(0deg);
+  }
+  25% {
+    transform: translateX(-50px) translateY(-80px) rotateY(90deg);
+  }
+  50% {
+    transform: translateX(-50px) translateY(-100px) rotateY(180deg);
+  }
+  75% {
+    transform: translateX(-50px) translateY(-80px) rotateY(270deg);
+  }
+  100% {
+    transform: translateX(-50px) translateY(-50%) rotateY(360deg);
+  }
+}
+
+/* Animation Classes */
+.animate-wave-hello-right {
+  animation: wave-hello-right 0.5s ease-out forwards;
+}
+
+.animate-backflip {
+  animation: backflip 2s ease-in-out forwards;
+}
