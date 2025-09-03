@@ -1,6 +1,9 @@
 import React, { useState, useEffect, useRef } from 'react';
+import { useTheme } from '../contexts/ThemeContext';
 
 const About = () => {
+  const { currentTheme } = useTheme();
+  const isMatrix = currentTheme === 'redMatrix';
   const [showScrollGhost, setShowScrollGhost] = useState(false);
   const whyParticipateRef = useRef(null);
   const features = [
@@ -58,13 +61,13 @@ const About = () => {
   }, []);
 
   return (
-    <section id="about" className="py-20 bg-white">
+    <section id="about" className={`py-20 ${isMatrix ? 'bg-transparent' : 'bg-white'}`}>
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center mb-16">
-          <h2 className="text-4xl md:text-5xl font-bold font-space text-gray-900 mb-6">
+          <h2 className={`text-4xl md:text-5xl font-bold font-space mb-6 ${isMatrix ? 'text-green-400' : 'text-gray-900'}`}>
             What is <span className="gradient-text">HackFest?</span>
           </h2>
-          <p className="text-xl text-gray-600 max-w-3xl mx-auto leading-relaxed">
+          <p className={`text-xl max-w-3xl mx-auto leading-relaxed ${isMatrix ? 'text-green-300' : 'text-gray-600'}`}>
             HackFest 2025 is a premier hackathon bringing together the brightest minds in technology.
             Over 48 hours, participants will collaborate, innovate, and build solutions that could change the world.
           </p>
@@ -72,15 +75,15 @@ const About = () => {
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 mb-16">
           {features.map((feature, index) => (
-            <div key={index} className="text-center p-6 rounded-2xl bg-gray-50 card-hover">
+            <div key={index} className={`text-center p-6 rounded-2xl card-hover ${isMatrix ? 'bg-green-900/20 border border-green-500/30' : 'bg-gray-50'}`}>
               <div className="text-4xl mb-4">{feature.icon}</div>
-              <h3 className="text-xl font-semibold text-gray-900 mb-3 font-space">{feature.title}</h3>
-              <p className="text-gray-600 leading-relaxed">{feature.description}</p>
+              <h3 className={`text-xl font-semibold mb-3 font-space ${isMatrix ? 'text-green-400' : 'text-gray-900'}`}>{feature.title}</h3>
+              <p className={`leading-relaxed ${isMatrix ? 'text-green-300' : 'text-gray-600'}`}>{feature.description}</p>
             </div>
           ))}
         </div>
 
-        <div className="bg-gradient-to-r from-blue-50 to-purple-50 rounded-3xl p-8 md:p-12 relative overflow-hidden">
+        <div className={`rounded-3xl p-8 md:p-12 relative overflow-hidden ${isMatrix ? 'bg-green-900/10 border border-green-500/20' : 'bg-gradient-to-r from-blue-50 to-purple-50'}`}>
           {/* Scroll-triggered Ghost Animation */}
           {showScrollGhost && (
             <div className="absolute inset-0 pointer-events-none z-10">
@@ -124,7 +127,7 @@ const About = () => {
 
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
             <div ref={whyParticipateRef}>
-              <h3 className="text-3xl font-bold font-space text-gray-900 mb-6">
+              <h3 className={`text-3xl font-bold font-space mb-6 ${isMatrix ? 'text-green-400' : 'text-gray-900'}`}>
                 Why Participate?
               </h3>
               <ul className="space-y-4">
@@ -134,7 +137,7 @@ const About = () => {
                       <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
                     </svg>
                   </span>
-                  <span className="text-gray-700">Network with industry professionals and like-minded peers</span>
+                  <span className={isMatrix ? 'text-green-300' : 'text-gray-700'}>Network with industry professionals and like-minded peers</span>
                 </li>
                 <li className="flex items-start">
                   <span className="w-6 h-6 bg-green-500 rounded-full flex items-center justify-center mr-3 mt-0.5">
@@ -142,7 +145,7 @@ const About = () => {
                       <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
                     </svg>
                   </span>
-                  <span className="text-gray-700">Learn new technologies and development practices</span>
+                  <span className={isMatrix ? 'text-green-300' : 'text-gray-700'}>Learn new technologies and development practices</span>
                 </li>
                 <li className="flex items-start">
                   <span className="w-6 h-6 bg-green-500 rounded-full flex items-center justify-center mr-3 mt-0.5">
