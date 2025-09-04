@@ -1,16 +1,35 @@
 import React, { useState } from 'react';
 import { useTheme } from '../contexts/ThemeContext';
 
-const Hero = () => {
+const Hero = ({ onNavigate }) => {
   const { currentTheme, themes, switchTheme } = useTheme();
   const theme = themes[currentTheme];
+  const isMatrix = currentTheme === 'redMatrix';
   const [isThemeMenuOpen, setIsThemeMenuOpen] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [showGhostInGif, setShowGhostInGif] = useState(false);
   const [showGhostMessage, setShowGhostMessage] = useState(false);
   const [showWavingGhost, setShowWavingGhost] = useState(false);
+  const mobileMenuRef = React.useRef(null);
 
   const closeMenu = () => setIsMobileMenuOpen(false);
+
+  // Click outside to close mobile menu
+  React.useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (mobileMenuRef.current && !mobileMenuRef.current.contains(event.target)) {
+        setIsMobileMenuOpen(false);
+      }
+    };
+
+    if (isMobileMenuOpen) {
+      document.addEventListener('mousedown', handleClickOutside);
+    }
+
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside);
+    };
+  }, [isMobileMenuOpen]);
 
   // Show ghost in GIF after 4 seconds, then show message 2 seconds later
   React.useEffect(() => {
@@ -48,7 +67,7 @@ const Hero = () => {
           <div className="flex justify-between items-center">
             {/* HackFest 2025 - Top Left */}
             <div>
-              <h1 className="text-xl font-bold font-space gradient-text">HackFest 2025</h1>
+              <h1 className={`text-xl font-bold font-space ${isMatrix ? 'text-green-400' : 'gradient-text'}`}>HackFest 2025</h1>
             </div>
 
             {/* Desktop Navigation - Top Right */}
@@ -93,137 +112,124 @@ const Hero = () => {
             </div>
 
             {/* Mobile Menu Button */}
-            <div className="md:hidden">
+            <div className="md:hidden relative">
               <button
                 onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
                 className="text-gray-700 hover:text-blue-600 focus:outline-none p-2 rounded-lg hover:bg-gray-100 transition-colors"
               >
-                {isMobileMenuOpen ? (
-                  <svg className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
-                  </svg>
-                ) : (
-                  <svg className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
-                  </svg>
-                )}
+                <svg className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
+                </svg>
               </button>
+
+              {/* Mobile Dropdown Menu */}
+              {isMobileMenuOpen && (
+                <div ref={mobileMenuRef} className="absolute right-0 top-full mt-2 w-56 bg-white rounded-lg shadow-xl border border-gray-200 py-1 z-50">
+                  <div className="menu">
+                    <ul>
+                      <li>
+                        <a 
+                          href="#home" 
+                          onClick={closeMenu}
+                          className="flex items-center px-4 py-2.5 text-gray-700 hover:text-blue-600 hover:bg-blue-50 transition-colors"
+                        >
+                          <svg className="w-4 h-4 mr-3 text-purple-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6" />
+                          </svg>
+                          <span className="text-sm font-medium">Home</span>
+                        </a>
+                      </li>
+                      <li>
+                        <a 
+                          href="#about" 
+                          onClick={closeMenu}
+                          className="flex items-center px-4 py-2.5 text-gray-700 hover:text-blue-600 hover:bg-blue-50 transition-colors"
+                        >
+                          <svg className="w-4 h-4 mr-3 text-blue-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                          </svg>
+                          <span className="text-sm font-medium">About</span>
+                        </a>
+                      </li>
+                      <li>
+                        <a 
+                          href="#timeline" 
+                          onClick={closeMenu}
+                          className="flex items-center px-4 py-2.5 text-gray-700 hover:text-blue-600 hover:bg-blue-50 transition-colors"
+                        >
+                          <svg className="w-4 h-4 mr-3 text-indigo-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
+                          </svg>
+                          <span className="text-sm font-medium">Timeline</span>
+                        </a>
+                      </li>
+                      <li>
+                        <a 
+                          href="#prizes" 
+                          onClick={closeMenu}
+                          className="flex items-center px-4 py-2.5 text-gray-700 hover:text-blue-600 hover:bg-blue-50 transition-colors"
+                        >
+                          <svg className="w-4 h-4 mr-3 text-yellow-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
+                          </svg>
+                          <span className="text-sm font-medium">Prizes</span>
+                        </a>
+                      </li>
+                      <li>
+                        <a 
+                          href="#sponsors" 
+                          onClick={closeMenu}
+                          className="flex items-center px-4 py-2.5 text-gray-700 hover:text-blue-600 hover:bg-blue-50 transition-colors"
+                        >
+                          <svg className="w-4 h-4 mr-3 text-green-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4" />
+                          </svg>
+                          <span className="text-sm font-medium">Sponsors</span>
+                        </a>
+                      </li>
+                      
+                      {/* Themes Section */}
+                      <li className="border-t border-gray-200 mt-1 pt-1">
+                        <div className="px-4 py-2">
+                          <p className="text-xs font-semibold text-gray-500 mb-2">Themes</p>
+                          <div className="space-y-1">
+                            {Object.entries(themes).map(([key, themeOption]) => (
+                              <button
+                                key={key}
+                                onClick={() => {
+                                  switchTheme(key);
+                                  closeMenu();
+                                }}
+                                className={`w-full text-left px-2 py-1 rounded text-xs transition-colors ${
+                                  currentTheme === key
+                                    ? 'bg-blue-100 text-blue-600 font-medium'
+                                    : 'text-gray-600 hover:bg-gray-50'
+                                }`}
+                              >
+                                {themeOption.name}
+                              </button>
+                            ))}
+                          </div>
+                        </div>
+                      </li>
+                      
+                      {/* Credits Section */}
+                      <li className="border-t border-gray-200 mt-1 pt-1">
+                        <div className="px-4 py-2 text-center">
+                          <p className="text-xs text-gray-400 mb-1">Made by</p>
+                          <p className="text-xs font-semibold text-blue-600">krishmhatre</p>
+                        </div>
+                      </li>
+                    </ul>
+                  </div>
+                </div>
+              )}
             </div>
           </div>
         </div>
       </div>
 
-      {/* Mobile Sidebar Overlay */}
-      {isMobileMenuOpen && (
-        <div className="fixed inset-0 z-50 md:hidden">
-          {/* Backdrop */}
-          <div
-            className="fixed inset-0 bg-black/50 backdrop-blur-sm transition-opacity"
-            onClick={closeMenu}
-          ></div>
 
-          {/* Sidebar */}
-          <div className="fixed top-0 right-0 h-full w-80 bg-white shadow-2xl transform transition-transform">
-            <div className="flex flex-col h-full">
-              {/* Sidebar Header */}
-              <div className="flex items-center justify-between p-6 border-b border-gray-200">
-                <h2 className="text-xl font-bold font-space gradient-text">Menu</h2>
-                <button
-                  onClick={closeMenu}
-                  className="text-gray-500 hover:text-gray-700 p-2 rounded-lg hover:bg-gray-100 transition-colors"
-                >
-                  <svg className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
-                  </svg>
-                </button>
-              </div>
-
-              {/* Navigation Links */}
-              <nav className="flex-1 px-6 py-8">
-                <div className="space-y-4">
-                  <a
-                    href="#home"
-                    onClick={closeMenu}
-                    className="flex items-center px-4 py-3 text-gray-700 hover:text-blue-600 hover:bg-blue-50 rounded-lg transition-colors font-medium"
-                  >
-                    <svg className="w-5 h-5 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6" />
-                    </svg>
-                    Home
-                  </a>
-                  <a
-                    href="#about"
-                    onClick={closeMenu}
-                    className="flex items-center px-4 py-3 text-gray-700 hover:text-blue-600 hover:bg-blue-50 rounded-lg transition-colors font-medium"
-                  >
-                    <svg className="w-5 h-5 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
-                    </svg>
-                    About
-                  </a>
-                  <a
-                    href="#timeline"
-                    onClick={closeMenu}
-                    className="flex items-center px-4 py-3 text-gray-700 hover:text-blue-600 hover:bg-blue-50 rounded-lg transition-colors font-medium"
-                  >
-                    <svg className="w-5 h-5 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
-                    </svg>
-                    Timeline
-                  </a>
-                  <a
-                    href="#prizes"
-                    onClick={closeMenu}
-                    className="flex items-center px-4 py-3 text-gray-700 hover:text-blue-600 hover:bg-blue-50 rounded-lg transition-colors font-medium"
-                  >
-                    <svg className="w-5 h-5 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
-                    </svg>
-                    Prizes
-                  </a>
-                  <a
-                    href="#sponsors"
-                    onClick={closeMenu}
-                    className="flex items-center px-4 py-3 text-gray-700 hover:text-blue-600 hover:bg-blue-50 rounded-lg transition-colors font-medium"
-                  >
-                    <svg className="w-5 h-5 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4" />
-                    </svg>
-                    Sponsors
-                  </a>
-                </div>
-              </nav>
-
-              {/* Sidebar Footer - Theme Switcher */}
-              <div className="p-6 border-t border-gray-200">
-                <div className="mb-4">
-                  <h3 className="text-sm font-semibold text-gray-700 mb-3">Choose Theme</h3>
-                  <div className="space-y-2">
-                    {Object.entries(themes).map(([key, themeOption]) => (
-                      <button
-                        key={key}
-                        onClick={() => {
-                          switchTheme(key);
-                          closeMenu();
-                        }}
-                        className={`w-full text-left px-3 py-2 rounded-lg transition-colors text-sm ${currentTheme === key
-                          ? 'bg-blue-100 text-blue-700 font-medium'
-                          : 'text-gray-600 hover:bg-gray-50'
-                          }`}
-                      >
-                        {themeOption.name}
-                      </button>
-                    ))}
-                  </div>
-                </div>
-                <div className="text-center">
-                  <p className="text-sm text-gray-500">March 15-17, 2025</p>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      )}
 
       {/* Circular Ghost Animation */}
       <div className="absolute top-1/2 left-1/2 z-30 pointer-events-none">
@@ -337,13 +343,13 @@ const Hero = () => {
               {/* Main Heading */}
               <div className="mb-6">
                 <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold tracking-tight mb-2">
-                  <span className="font-medium transition-colors duration-300 text-gray-900">Build the </span>
-                  <span className="bg-gradient-to-r bg-[200%_auto] bg-clip-text leading-tight text-transparent transition-all duration-300 from-neutral-900 via-slate-500 to-neutral-500">Future</span>
+                  <span className={`font-medium transition-colors duration-300 ${isMatrix ? 'text-cyan-400 animate-pulse' : 'text-gray-900'}`}>Build the </span>
+                  <span className={isMatrix ? 'text-yellow-400 bg-gradient-to-r from-yellow-400 via-orange-400 to-red-400 bg-clip-text text-transparent animate-shimmer bg-[length:200%_100%]' : 'bg-gradient-to-r bg-[200%_auto] bg-clip-text leading-tight text-transparent transition-all duration-300 from-neutral-900 via-slate-500 to-neutral-500'}>Future</span>
                 </h1>
               </div>
 
               {/* Description Text */}
-              <p className="text-base sm:text-lg leading-relaxed transition-colors duration-300 text-gray-600 text-center lg:text-left">
+              <p className={`text-base sm:text-lg leading-relaxed transition-colors duration-300 ${isMatrix ? 'text-green-300' : 'text-gray-600'} text-center lg:text-left`}>
                 Join 500+ developers, designers, and innovators for 48 hours of coding, creativity, and collaboration at the biggest hackathon of 2025.
                 <span className="block mt-2">Build the future with cutting-edge technology</span>
               </p>
@@ -453,10 +459,15 @@ const Hero = () => {
 
           {/* CTA Buttons */}
           <div className="flex flex-col sm:flex-row items-center justify-center gap-3 sm:gap-4 px-4 sm:px-0">
-            <button className="inline-flex items-center justify-center whitespace-nowrap gap-2 px-4 sm:px-8 py-3 text-sm sm:text-base font-medium shadow-lg transition-all duration-300 flex-1 sm:flex-none bg-slate-950 hover:bg-slate-900 text-white rounded-md cursor-pointer">
+            <button 
+              onClick={() => onNavigate('register')}
+              className="inline-flex items-center justify-center whitespace-nowrap gap-2 px-4 sm:px-8 py-3 text-sm sm:text-base font-medium shadow-lg transition-all duration-300 flex-1 sm:flex-none bg-slate-950 hover:bg-slate-900 text-white rounded-md cursor-pointer"
+            >
               <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="h-4 sm:h-5 w-4 sm:w-5">
-                <path d="M15 22v-4a4.8 4.8 0 0 0-1-3.5c3 0 6-2 6-5.5.08-1.25-.27-2.48-1-3.5.28-1.15.28-2.35 0-3.5 0 0-1 0-3 1.5-2.64-.5-5.36-.5-8 0C6 2 5 2 5 2c-.3 1.15-.3 2.35 0 3.5A5.403 5.403 0 0 0 4 9c0 3.5 3 5.5 6 5.5-.39.49-.68 1.05-.85 1.65-.17.6-.22 1.23-.15 1.85v4" />
-                <path d="M9 18c-4.51 2-5-2-7-2" />
+                <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2" />
+                <circle cx="9" cy="7" r="4" />
+                <line x1="19" y1="8" x2="19" y2="14" />
+                <line x1="22" y1="11" x2="16" y2="11" />
               </svg>
               Register Here
             </button>
@@ -491,6 +502,8 @@ const Hero = () => {
           </div>
         </div>
       </div>
+
+
     </section >
   );
 };

@@ -14,13 +14,11 @@ export const useTheme = () => {
 export const themes = {
   grid: {
     name: 'Grid Pattern',
-    background: '#f1f5f9',
+    background: '#f8fafc',
     style: {
-      backgroundImage: `linear-gradient(to right, #cbd5e1 1px, transparent 1px),
-                       linear-gradient(to bottom, #cbd5e1 1px, transparent 1px)`,
-      backgroundSize: "20px 30px",
-      WebkitMaskImage: "radial-gradient(ellipse 70% 60% at 50% 0%, #000 70%, transparent 100%)",
-      maskImage: "radial-gradient(ellipse 70% 60% at 50% 0%, #000 70%, transparent 100%)",
+      backgroundImage: `linear-gradient(to right, rgba(148, 163, 184, 0.3) 1px, transparent 1px),
+                       linear-gradient(to bottom, rgba(148, 163, 184, 0.3) 1px, transparent 1px)`,
+      backgroundSize: "24px 24px",
     }
   },
   emerald: {

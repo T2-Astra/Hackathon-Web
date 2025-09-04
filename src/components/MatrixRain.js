@@ -14,13 +14,14 @@ const MatrixRain = () => {
     // Characters to display (Japanese katakana and other symbols for authentic Matrix effect)
     const chars = '日ﾊﾐﾋｰｳｼﾅﾓﾆｻﾜﾂｵﾘｱﾎﾃﾏｹﾒｴｶｷﾑﾕﾗｾﾈｽﾀﾇﾍｦｲｸｺｿﾁﾄﾉﾌﾔﾖﾙﾚﾛﾝ0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ';
 
-    // Font size range - much bigger for better visibility
-    const minFontSize = 18;
-    const maxFontSize = 28;
+    // Font size range - responsive for mobile
+    const isMobile = window.innerWidth <= 768;
+    const minFontSize = isMobile ? 14 : 18;
+    const maxFontSize = isMobile ? 20 : 28;
 
     // Column data
     const columns = [];
-    const columnCount = Math.floor(canvas.width / minFontSize * 0.3); // Better density for mobile
+    const columnCount = Math.floor(canvas.width / minFontSize * (isMobile ? 0.4 : 0.3)); // Better density for mobile
 
     // Initialize columns with random properties
     for (let i = 0; i < columnCount; i++) {
@@ -28,8 +29,8 @@ const MatrixRain = () => {
         x: Math.random() * canvas.width,
         y: Math.random() * -canvas.height, // Start above the screen at random positions
         fontSize: Math.floor(Math.random() * (maxFontSize - minFontSize) + minFontSize),
-        speed: 2.5, // Fixed speed for consistent performance on mobile and desktop
-        length: Math.floor(Math.random() * 8 + 5), // Shorter trails
+        speed: isMobile ? 2 : 2.5, // Slightly slower on mobile for better performance
+        length: Math.floor(Math.random() * (isMobile ? 6 : 8) + (isMobile ? 3 : 5)), // Shorter trails on mobile
         characters: [],
         brightHead: true // All columns have bright heads for better visibility
       });
@@ -56,7 +57,7 @@ const MatrixRain = () => {
         if (column.y > canvas.height + column.length * column.fontSize) {
           column.y = -column.length * column.fontSize;
           column.x = Math.random() * canvas.width;
-          column.speed = 2.5; // Keep consistent fixed speed
+          column.speed = isMobile ? 2 : 2.5; // Keep consistent speed based on device
 
           // Regenerate characters
           for (let j = 0; j < column.length; j++) {
@@ -107,10 +108,36 @@ const MatrixRain = () => {
 
     const animation = requestAnimationFrame(animationFrame);
 
-    // Handle window resize
+    // Handle window resize with mobile optimization
     const handleResize = () => {
       canvas.width = window.innerWidth;
       canvas.height = window.innerHeight;
+      
+      // Recalculate mobile settings on resize
+      const newIsMobile = window.innerWidth <= 768;
+      const newColumnCount = Math.floor(canvas.width / minFontSize * (newIsMobile ? 0.4 : 0.3));
+      
+      // Adjust column count if needed
+      while (columns.length > newColumnCount) {
+        columns.pop();
+      }
+      while (columns.length < newColumnCount) {
+        columns.push({
+          x: Math.random() * canvas.width,
+          y: Math.random() * -canvas.height,
+          fontSize: Math.floor(Math.random() * (maxFontSize - minFontSize) + minFontSize),
+          speed: newIsMobile ? 2 : 2.5,
+          length: Math.floor(Math.random() * (newIsMobile ? 6 : 8) + (newIsMobile ? 3 : 5)),
+          characters: [],
+          brightHead: true
+        });
+        
+        // Generate characters for new column
+        const newColumn = columns[columns.length - 1];
+        for (let j = 0; j < newColumn.length; j++) {
+          newColumn.characters.push(chars.charAt(Math.floor(Math.random() * chars.length)));
+        }
+      }
     };
 
     window.addEventListener('resize', handleResize);
@@ -133,7 +160,7 @@ const MatrixRain = () => {
         width: '100%',
         height: '100%',
         zIndex: 1, // Above background but below content
-        opacity: 0.2, // Higher opacity for better visibility on mobile
+        opacity: window.innerWidth <= 768 ? 0.25 : 0.2, // Higher opacity for mobile visibility
         pointerEvents: 'none',
         backgroundColor: 'transparent'
       }}

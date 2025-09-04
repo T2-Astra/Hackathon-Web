@@ -153,7 +153,7 @@ const About = () => {
                       <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
                     </svg>
                   </span>
-                  <span className="text-gray-700">Build your portfolio with real-world projects</span>
+                  <span className={isMatrix ? 'text-green-300' : 'text-gray-700'}>Build your portfolio with real-world projects</span>
                 </li>
                 <li className="flex items-start">
                   <span className="w-6 h-6 bg-green-500 rounded-full flex items-center justify-center mr-3 mt-0.5">
@@ -161,29 +161,29 @@ const About = () => {
                       <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
                     </svg>
                   </span>
-                  <span className="text-gray-700">Win amazing prizes and recognition</span>
+                  <span className={isMatrix ? 'text-green-300' : 'text-gray-700'}>Win amazing prizes and recognition</span>
                 </li>
               </ul>
             </div>
             <div className="text-center">
-              <div className="bg-white rounded-2xl p-8 shadow-lg">
-                <h4 className="text-2xl font-bold font-space text-gray-900 mb-4">Event Details</h4>
+              <div className={`rounded-2xl p-8 shadow-lg ${isMatrix ? 'bg-green-900/20 border border-green-500/30' : 'bg-white'}`}>
+                <h4 className={`text-2xl font-bold font-space mb-4 ${isMatrix ? 'text-green-400' : 'text-gray-900'}`}>Event Details</h4>
                 <div className="space-y-3 text-left">
                   <div className="flex justify-between">
-                    <span className="text-gray-600">Date:</span>
-                    <span className="font-semibold">March 15-17, 2025</span>
+                    <span className={isMatrix ? 'text-green-300' : 'text-gray-600'}>Date:</span>
+                    <span className={`font-semibold ${isMatrix ? 'text-green-400' : 'text-gray-900'}`}>March 15-17, 2025</span>
                   </div>
                   <div className="flex justify-between">
-                    <span className="text-gray-600">Duration:</span>
-                    <span className="font-semibold">48 Hours</span>
+                    <span className={isMatrix ? 'text-green-300' : 'text-gray-600'}>Duration:</span>
+                    <span className={`font-semibold ${isMatrix ? 'text-green-400' : 'text-gray-900'}`}>48 Hours</span>
                   </div>
                   <div className="flex justify-between">
-                    <span className="text-gray-600">Location:</span>
-                    <span className="font-semibold">Tech Hub Center</span>
+                    <span className={isMatrix ? 'text-green-300' : 'text-gray-600'}>Location:</span>
+                    <span className={`font-semibold ${isMatrix ? 'text-green-400' : 'text-gray-900'}`}>Tech Hub Center</span>
                   </div>
                   <div className="flex justify-between">
-                    <span className="text-gray-600">Team Size:</span>
-                    <span className="font-semibold">2-4 Members</span>
+                    <span className={isMatrix ? 'text-green-300' : 'text-gray-600'}>Team Size:</span>
+                    <span className={`font-semibold ${isMatrix ? 'text-green-400' : 'text-gray-900'}`}>2-4 Members</span>
                   </div>
                 </div>
               </div>

@@ -1,6 +1,9 @@
 import React from 'react';
+import { useTheme } from '../contexts/ThemeContext';
 
 const Timeline = () => {
+  const { currentTheme } = useTheme();
+  const isMatrix = currentTheme === 'redMatrix';
   const events = [
     {
       time: "6:00 PM",
@@ -77,13 +80,13 @@ const Timeline = () => {
   ];
 
   return (
-    <section id="timeline" className="py-20 bg-gray-50">
+    <section id="timeline" className={`py-20 ${isMatrix ? 'bg-transparent' : 'bg-gray-50'}`}>
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center mb-16">
-          <h2 className="text-4xl md:text-5xl font-bold font-space text-gray-900 mb-6">
+          <h2 className={`text-4xl md:text-5xl font-bold font-space mb-6 ${isMatrix ? 'text-green-400' : 'text-gray-900'}`}>
             Event <span className="gradient-text">Timeline</span>
           </h2>
-          <p className="text-xl text-gray-600 max-w-3xl mx-auto">
+          <p className={`text-xl max-w-3xl mx-auto ${isMatrix ? 'text-green-300' : 'text-gray-600'}`}>
             A carefully planned 48-hour journey from idea to implementation
           </p>
         </div>
@@ -100,15 +103,15 @@ const Timeline = () => {
 
                 {/* Content */}
                 <div className={`ml-12 md:ml-0 md:w-1/2 ${index % 2 === 0 ? 'md:pr-12' : 'md:pl-12'}`}>
-                  <div className="bg-white rounded-2xl p-6 shadow-lg card-hover">
+                  <div className={`rounded-2xl p-6 shadow-lg card-hover ${isMatrix ? 'bg-green-900/20 border border-green-500/30' : 'bg-white'}`}>
                     <div className="flex items-center mb-3">
                       <span className="bg-gradient-to-r from-blue-500 to-purple-500 text-white px-3 py-1 rounded-full text-sm font-semibold mr-3">
                         {event.day}
                       </span>
-                      <span className="text-gray-600 font-medium">{event.time}</span>
+                      <span className={`font-medium ${isMatrix ? 'text-green-300' : 'text-gray-600'}`}>{event.time}</span>
                     </div>
-                    <h3 className="text-xl font-bold font-space text-gray-900 mb-2">{event.title}</h3>
-                    <p className="text-gray-600">{event.description}</p>
+                    <h3 className={`text-xl font-bold font-space mb-2 ${isMatrix ? 'text-green-400' : 'text-gray-900'}`}>{event.title}</h3>
+                    <p className={isMatrix ? 'text-green-300' : 'text-gray-600'}>{event.description}</p>
                   </div>
                 </div>
 
@@ -120,30 +123,30 @@ const Timeline = () => {
         </div>
 
         <div className="mt-16 text-center">
-          <div className="bg-gradient-to-r from-blue-50 to-purple-50 rounded-2xl p-8">
-            <h3 className="text-2xl font-bold font-space text-gray-900 mb-4">
+          <div className={`rounded-2xl p-8 ${isMatrix ? 'bg-green-900/10 border border-green-500/20' : 'bg-gradient-to-r from-blue-50 to-purple-50'}`}>
+            <h3 className={`text-2xl font-bold font-space mb-4 ${isMatrix ? 'text-green-400' : 'text-gray-900'}`}>
               Important Notes
             </h3>
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6 text-left">
               <div className="flex items-start">
                 <span className="text-2xl mr-3">⏰</span>
                 <div>
-                  <h4 className="font-semibold text-gray-900 mb-1">Be Punctual</h4>
-                  <p className="text-gray-600 text-sm">Arrive on time for all scheduled events</p>
+                  <h4 className={`font-semibold mb-1 ${isMatrix ? 'text-green-400' : 'text-gray-900'}`}>Be Punctual</h4>
+                  <p className={`text-sm ${isMatrix ? 'text-green-300' : 'text-gray-600'}`}>Arrive on time for all scheduled events</p>
                 </div>
               </div>
               <div className="flex items-start">
                 <span className="text-2xl mr-3">🍕</span>
                 <div>
-                  <h4 className="font-semibold text-gray-900 mb-1">Free Meals</h4>
-                  <p className="text-gray-600 text-sm">All meals and snacks are provided</p>
+                  <h4 className={`font-semibold mb-1 ${isMatrix ? 'text-green-400' : 'text-gray-900'}`}>Free Meals</h4>
+                  <p className={`text-sm ${isMatrix ? 'text-green-300' : 'text-gray-600'}`}>All meals and snacks are provided</p>
                 </div>
               </div>
               <div className="flex items-start">
                 <span className="text-2xl mr-3">💤</span>
                 <div>
-                  <h4 className="font-semibold text-gray-900 mb-1">Rest Areas</h4>
-                  <p className="text-gray-600 text-sm">Quiet zones available for power naps</p>
+                  <h4 className={`font-semibold mb-1 ${isMatrix ? 'text-green-400' : 'text-gray-900'}`}>Rest Areas</h4>
+                  <p className={`text-sm ${isMatrix ? 'text-green-300' : 'text-gray-600'}`}>Quiet zones available for power naps</p>
                 </div>
               </div>
             </div>
