@@ -564,8 +564,9 @@ body {
 .animate-peek-ghost .animate-scary-glow {
   animation: scary-glow 2s ease-in-out infinite,
              peek-ghost-eye-blink 4s ease-in-out infinite 3s;
-}/* W
-aving Ghost Animation from Left Corner */
+}
+
+/* Waving Ghost Animation from Left Corner */
 @keyframes wave-hello {
   0% {
     transform: translateX(-100px) translateY(-50%);
@@ -598,8 +599,9 @@ aving Ghost Animation from Left Corner */
 
 .animate-wave-hand {
   animation: wave-hand 0.5s ease-in-out infinite;
-}/* Wave 
-Hello Right Animation */
+}
+
+/* Wave Hello Right Animation */
 @keyframes wave-hello-right {
   0% {
     transform: translateX(100px) translateY(-50%);
@@ -637,8 +639,9 @@ Hello Right Animation */
 
 .animate-backflip {
   animation: backflip 2s ease-in-out forwards;
-}/
-* Shimmer Animation */
+}
+
+/* Shimmer Animation */
 @keyframes shimmer {
   0% {
     background-position: -200% 0;
