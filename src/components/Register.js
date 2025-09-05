@@ -23,7 +23,7 @@ const Register = ({ onNavigate }) => {
     };
 
     return (
-        <section className="min-h-screen py-20 bg-gray-50 relative z-10" style={{ backgroundColor: '#f9fafb' }}>
+        <section className="min-h-screen py-20 bg-gray-50">
             <div className="max-w-2xl mx-auto px-4 sm:px-6 lg:px-8">
                 {/* Back to Home Button */}
                 <div className="mb-8">
@@ -62,7 +62,7 @@ const Register = ({ onNavigate }) => {
                                     required
                                     value={formData.name}
                                     onChange={(e) => setFormData({ ...formData, name: e.target.value })}
-                                    className="w-full px-4 py-3 rounded-lg transition-colors border border-gray-300 focus:ring-2 focus:ring-blue-500 focus:border-transparent text-black bg-white"
+                                    className="w-full px-4 py-3 rounded-lg transition-colors border border-gray-300 focus:ring-2 focus:ring-blue-500 focus:border-transparent"
                                     placeholder="Enter your full name"
                                 />
                             </div>
@@ -77,7 +77,7 @@ const Register = ({ onNavigate }) => {
                                     required
                                     value={formData.email}
                                     onChange={(e) => setFormData({ ...formData, email: e.target.value })}
-                                    className="w-full px-4 py-3 rounded-lg transition-colors border border-gray-300 focus:ring-2 focus:ring-blue-500 focus:border-transparent text-black bg-white"
+                                    className="w-full px-4 py-3 rounded-lg transition-colors border border-gray-300 focus:ring-2 focus:ring-blue-500 focus:border-transparent"
                                     placeholder="Enter your email address"
                                 />
                             </div>
@@ -92,7 +92,7 @@ const Register = ({ onNavigate }) => {
                                     required
                                     value={formData.collegeName}
                                     onChange={(e) => setFormData({ ...formData, collegeName: e.target.value })}
-                                    className="w-full px-4 py-3 rounded-lg transition-colors border border-gray-300 focus:ring-2 focus:ring-blue-500 focus:border-transparent text-black bg-white"
+                                    className="w-full px-4 py-3 rounded-lg transition-colors border border-gray-300 focus:ring-2 focus:ring-blue-500 focus:border-transparent"
                                     placeholder="Enter your college or university name"
                                 />
                             </div>
@@ -106,7 +106,7 @@ const Register = ({ onNavigate }) => {
                                     required
                                     value={formData.department}
                                     onChange={(e) => setFormData({ ...formData, department: e.target.value })}
-                                    className="w-full px-4 py-3 rounded-lg transition-colors border border-gray-300 focus:ring-2 focus:ring-blue-500 focus:border-transparent text-black bg-white"
+                                    className="w-full px-4 py-3 rounded-lg transition-colors border border-gray-300 focus:ring-2 focus:ring-blue-500 focus:border-transparent"
                                 >
                                     <option value="">Select your department</option>
                                     <option value="Computer Science">Computer Science</option>
@@ -134,7 +134,7 @@ const Register = ({ onNavigate }) => {
                                     type="tel"
                                     value={formData.phone}
                                     onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
-                                    className="w-full px-4 py-3 rounded-lg transition-colors border border-gray-300 focus:ring-2 focus:ring-blue-500 focus:border-transparent text-black bg-white"
+                                    className="w-full px-4 py-3 rounded-lg transition-colors border border-gray-300 focus:ring-2 focus:ring-blue-500 focus:border-transparent"
                                     placeholder="Enter your phone number"
                                 />
                             </div>

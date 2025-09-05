@@ -4,6 +4,8 @@ import { useTheme } from '../contexts/ThemeContext';
 const About = () => {
   const { currentTheme } = useTheme();
   const isMatrix = currentTheme === 'redMatrix';
+  const isDarkGrid = currentTheme === 'emerald';
+  const shouldUseDarkStyling = isDarkGrid; // Only Dark Grid theme gets dark styling
   const [showScrollGhost, setShowScrollGhost] = useState(false);
   const whyParticipateRef = useRef(null);
   const features = [
@@ -61,13 +63,13 @@ const About = () => {
   }, []);
 
   return (
-    <section id="about" className={`py-20 ${isMatrix ? 'bg-transparent' : 'bg-white'}`}>
+    <section id="about" className={`py-20 ${isMatrix ? 'bg-transparent' : ''}`}>
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center mb-16">
-          <h2 className={`text-4xl md:text-5xl font-bold font-space mb-6 ${isMatrix ? 'text-green-400' : 'text-gray-900'}`}>
+          <h2 className={`text-4xl md:text-5xl font-bold font-space mb-6 ${isMatrix ? 'text-green-400' : shouldUseDarkStyling ? 'text-white' : 'text-gray-900'}`}>
             What is <span className="gradient-text">HackFest?</span>
           </h2>
-          <p className={`text-xl max-w-3xl mx-auto leading-relaxed ${isMatrix ? 'text-green-300' : 'text-gray-600'}`}>
+          <p className={`text-xl max-w-3xl mx-auto leading-relaxed ${isMatrix ? 'text-green-300' : shouldUseDarkStyling ? 'text-gray-300' : 'text-gray-600'}`}>
             HackFest 2025 is a premier hackathon bringing together the brightest minds in technology.
             Over 48 hours, participants will collaborate, innovate, and build solutions that could change the world.
           </p>
@@ -75,15 +77,15 @@ const About = () => {
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 mb-16">
           {features.map((feature, index) => (
-            <div key={index} className={`text-center p-6 rounded-2xl card-hover ${isMatrix ? 'bg-green-900/20 border border-green-500/30' : 'bg-gray-50'}`}>
+            <div key={index} className={`text-center p-6 rounded-2xl card-hover ${isMatrix ? 'bg-green-900/20 border border-green-500/30' : shouldUseDarkStyling ? 'bg-gray-800/50 border border-gray-600/30' : 'bg-gray-50'}`}>
               <div className="text-4xl mb-4">{feature.icon}</div>
-              <h3 className={`text-xl font-semibold mb-3 font-space ${isMatrix ? 'text-green-400' : 'text-gray-900'}`}>{feature.title}</h3>
-              <p className={`leading-relaxed ${isMatrix ? 'text-green-300' : 'text-gray-600'}`}>{feature.description}</p>
+              <h3 className={`text-xl font-semibold mb-3 font-space ${isMatrix ? 'text-green-400' : shouldUseDarkStyling ? 'text-white' : 'text-gray-900'}`}>{feature.title}</h3>
+              <p className={`leading-relaxed ${isMatrix ? 'text-green-300' : shouldUseDarkStyling ? 'text-gray-300' : 'text-gray-600'}`}>{feature.description}</p>
             </div>
           ))}
         </div>
 
-        <div className={`rounded-3xl p-8 md:p-12 relative overflow-hidden ${isMatrix ? 'bg-green-900/10 border border-green-500/20' : 'bg-gradient-to-r from-blue-50 to-purple-50'}`}>
+        <div className={`rounded-3xl p-8 md:p-12 relative overflow-hidden ${isMatrix ? 'bg-green-900/10 border border-green-500/20' : shouldUseDarkStyling ? 'bg-gray-800/30 border border-gray-600/30' : 'bg-gradient-to-r from-blue-50 to-purple-50'}`}>
           {/* Scroll-triggered Ghost Animation */}
           {showScrollGhost && (
             <div className="absolute inset-0 pointer-events-none z-10">
@@ -127,7 +129,7 @@ const About = () => {
 
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
             <div ref={whyParticipateRef}>
-              <h3 className={`text-3xl font-bold font-space mb-6 ${isMatrix ? 'text-green-400' : 'text-gray-900'}`}>
+              <h3 className={`text-3xl font-bold font-space mb-6 ${isMatrix ? 'text-green-400' : shouldUseDarkStyling ? 'text-white' : 'text-gray-900'}`}>
                 Why Participate?
               </h3>
               <ul className="space-y-4">
@@ -137,7 +139,7 @@ const About = () => {
                       <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
                     </svg>
                   </span>
-                  <span className={isMatrix ? 'text-green-300' : 'text-gray-700'}>Network with industry professionals and like-minded peers</span>
+                  <span className={isMatrix ? 'text-green-300' : shouldUseDarkStyling ? 'text-gray-300' : 'text-gray-700'}>Network with industry professionals and like-minded peers</span>
                 </li>
                 <li className="flex items-start">
                   <span className="w-6 h-6 bg-green-500 rounded-full flex items-center justify-center mr-3 mt-0.5">
@@ -145,7 +147,7 @@ const About = () => {
                       <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
                     </svg>
                   </span>
-                  <span className={isMatrix ? 'text-green-300' : 'text-gray-700'}>Learn new technologies and development practices</span>
+                  <span className={isMatrix ? 'text-green-300' : shouldUseDarkStyling ? 'text-gray-300' : 'text-gray-700'}>Learn new technologies and development practices</span>
                 </li>
                 <li className="flex items-start">
                   <span className="w-6 h-6 bg-green-500 rounded-full flex items-center justify-center mr-3 mt-0.5">
@@ -153,7 +155,7 @@ const About = () => {
                       <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
                     </svg>
                   </span>
-                  <span className={isMatrix ? 'text-green-300' : 'text-gray-700'}>Build your portfolio with real-world projects</span>
+                  <span className={isMatrix ? 'text-green-300' : shouldUseDarkStyling ? 'text-gray-300' : 'text-gray-700'}>Build your portfolio with real-world projects</span>
                 </li>
                 <li className="flex items-start">
                   <span className="w-6 h-6 bg-green-500 rounded-full flex items-center justify-center mr-3 mt-0.5">
@@ -161,29 +163,29 @@ const About = () => {
                       <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
                     </svg>
                   </span>
-                  <span className={isMatrix ? 'text-green-300' : 'text-gray-700'}>Win amazing prizes and recognition</span>
+                  <span className={isMatrix ? 'text-green-300' : shouldUseDarkStyling ? 'text-gray-300' : 'text-gray-700'}>Win amazing prizes and recognition</span>
                 </li>
               </ul>
             </div>
             <div className="text-center">
-              <div className={`rounded-2xl p-8 shadow-lg ${isMatrix ? 'bg-green-900/20 border border-green-500/30' : 'bg-white'}`}>
-                <h4 className={`text-2xl font-bold font-space mb-4 ${isMatrix ? 'text-green-400' : 'text-gray-900'}`}>Event Details</h4>
+              <div className={`rounded-2xl p-8 shadow-lg ${isMatrix ? 'bg-green-900/20 border border-green-500/30' : shouldUseDarkStyling ? 'bg-gray-800/50 border border-gray-600/30' : 'bg-white'}`}>
+                <h4 className={`text-2xl font-bold font-space mb-4 ${isMatrix ? 'text-green-400' : shouldUseDarkStyling ? 'text-white' : 'text-gray-900'}`}>Event Details</h4>
                 <div className="space-y-3 text-left">
                   <div className="flex justify-between">
-                    <span className={isMatrix ? 'text-green-300' : 'text-gray-600'}>Date:</span>
-                    <span className={`font-semibold ${isMatrix ? 'text-green-400' : 'text-gray-900'}`}>March 15-17, 2025</span>
+                    <span className={isMatrix ? 'text-green-300' : shouldUseDarkStyling ? 'text-gray-300' : 'text-gray-600'}>Date:</span>
+                    <span className={`font-semibold ${isMatrix ? 'text-green-400' : shouldUseDarkStyling ? 'text-white' : 'text-gray-900'}`}>March 15-17, 2025</span>
                   </div>
                   <div className="flex justify-between">
-                    <span className={isMatrix ? 'text-green-300' : 'text-gray-600'}>Duration:</span>
-                    <span className={`font-semibold ${isMatrix ? 'text-green-400' : 'text-gray-900'}`}>48 Hours</span>
+                    <span className={isMatrix ? 'text-green-300' : shouldUseDarkStyling ? 'text-gray-300' : 'text-gray-600'}>Duration:</span>
+                    <span className={`font-semibold ${isMatrix ? 'text-green-400' : shouldUseDarkStyling ? 'text-white' : 'text-gray-900'}`}>48 Hours</span>
                   </div>
                   <div className="flex justify-between">
-                    <span className={isMatrix ? 'text-green-300' : 'text-gray-600'}>Location:</span>
-                    <span className={`font-semibold ${isMatrix ? 'text-green-400' : 'text-gray-900'}`}>Tech Hub Center</span>
+                    <span className={isMatrix ? 'text-green-300' : shouldUseDarkStyling ? 'text-gray-300' : 'text-gray-600'}>Location:</span>
+                    <span className={`font-semibold ${isMatrix ? 'text-green-400' : shouldUseDarkStyling ? 'text-white' : 'text-gray-900'}`}>Tech Hub Center</span>
                   </div>
                   <div className="flex justify-between">
-                    <span className={isMatrix ? 'text-green-300' : 'text-gray-600'}>Team Size:</span>
-                    <span className={`font-semibold ${isMatrix ? 'text-green-400' : 'text-gray-900'}`}>2-4 Members</span>
+                    <span className={isMatrix ? 'text-green-300' : shouldUseDarkStyling ? 'text-gray-300' : 'text-gray-600'}>Team Size:</span>
+                    <span className={`font-semibold ${isMatrix ? 'text-green-400' : shouldUseDarkStyling ? 'text-white' : 'text-gray-900'}`}>2-4 Members</span>
                   </div>
                 </div>
               </div>

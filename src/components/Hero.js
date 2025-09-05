@@ -5,12 +5,14 @@ const Hero = ({ onNavigate }) => {
   const { currentTheme, themes, switchTheme } = useTheme();
   const theme = themes[currentTheme];
   const isMatrix = currentTheme === 'redMatrix';
+  const isDarkGrid = currentTheme === 'emerald';
   const [isThemeMenuOpen, setIsThemeMenuOpen] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [showGhostInGif, setShowGhostInGif] = useState(false);
   const [showGhostMessage, setShowGhostMessage] = useState(false);
   const [showWavingGhost, setShowWavingGhost] = useState(false);
   const mobileMenuRef = React.useRef(null);
+  const themeMenuRef = React.useRef(null);
 
   const closeMenu = () => setIsMobileMenuOpen(false);
 
@@ -30,6 +32,23 @@ const Hero = ({ onNavigate }) => {
       document.removeEventListener('mousedown', handleClickOutside);
     };
   }, [isMobileMenuOpen]);
+
+  // Click outside to close theme menu
+  React.useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (themeMenuRef.current && !themeMenuRef.current.contains(event.target)) {
+        setIsThemeMenuOpen(false);
+      }
+    };
+
+    if (isThemeMenuOpen) {
+      document.addEventListener('mousedown', handleClickOutside);
+    }
+
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside);
+    };
+  }, [isThemeMenuOpen]);
 
   // Show ghost in GIF after 4 seconds, then show message 2 seconds later
   React.useEffect(() => {
@@ -79,7 +98,7 @@ const Hero = ({ onNavigate }) => {
               <a href="#sponsors" className="text-gray-700 hover:text-blue-600 px-3 py-2 text-sm font-medium transition-colors rounded-lg hover:bg-blue-50">Sponsors</a>
 
               {/* Theme Switcher */}
-              <div className="relative">
+              <div className="relative" ref={themeMenuRef}>
                 <button
                   onClick={() => setIsThemeMenuOpen(!isThemeMenuOpen)}
                   className="bg-black text-white px-4 py-2 rounded-lg font-medium hover:shadow-lg hover:scale-105 transition-all duration-300 text-sm flex items-center gap-2"
@@ -87,7 +106,8 @@ const Hero = ({ onNavigate }) => {
                   <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M7.5 14.25c0-1.5 1.5-3 3-3s3 1.5 3 3-1.5 3-3 3-3-1.5-3-3zM12 21c4.97 0 9-4.03 9-9s-4.03-9-9-9-9 4.03-9 9c0 1.66.45 3.22 1.24 4.56a1.5 1.5 0 002.12.44l.44-.44c.39-.39.39-1.02 0-1.41a6 6 0 1110.2 0c-.39.39-.39 1.02 0 1.41l.44.44a1.5 1.5 0 002.12-.44C20.55 15.22 21 13.66 21 12z" />
                   </svg>
-                  Themes
+                  <span className="hidden lg:inline">Theme:</span>
+                  <span className="font-semibold">{themes[currentTheme].name}</span>
                 </button>
 
                 {/* Theme Dropdown */}
@@ -106,6 +126,22 @@ const Hero = ({ onNavigate }) => {
                         {themeOption.name}
                       </button>
                     ))}
+
+                    {/* Credits Section */}
+                    <div className="border-t border-gray-200 mt-2 pt-2">
+                      <div className="px-3 py-1 text-center">
+                        <p className="text-xs text-gray-400 mb-0.5">Made by</p>
+                        <a
+                          href="https://github.com/T2-Astra"
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="text-xs font-medium text-blue-600 hover:text-blue-800 transition-colors cursor-pointer"
+                          onClick={() => setIsThemeMenuOpen(false)}
+                        >
+                          Krish Mhatre
+                        </a>
+                      </div>
+                    </div>
                   </div>
                 )}
               </div>
@@ -128,8 +164,8 @@ const Hero = ({ onNavigate }) => {
                   <div className="menu">
                     <ul>
                       <li>
-                        <a 
-                          href="#home" 
+                        <a
+                          href="#home"
                           onClick={closeMenu}
                           className="flex items-center px-4 py-2.5 text-gray-700 hover:text-blue-600 hover:bg-blue-50 transition-colors"
                         >
@@ -140,8 +176,8 @@ const Hero = ({ onNavigate }) => {
                         </a>
                       </li>
                       <li>
-                        <a 
-                          href="#about" 
+                        <a
+                          href="#about"
                           onClick={closeMenu}
                           className="flex items-center px-4 py-2.5 text-gray-700 hover:text-blue-600 hover:bg-blue-50 transition-colors"
                         >
@@ -152,8 +188,8 @@ const Hero = ({ onNavigate }) => {
                         </a>
                       </li>
                       <li>
-                        <a 
-                          href="#timeline" 
+                        <a
+                          href="#timeline"
                           onClick={closeMenu}
                           className="flex items-center px-4 py-2.5 text-gray-700 hover:text-blue-600 hover:bg-blue-50 transition-colors"
                         >
@@ -164,8 +200,8 @@ const Hero = ({ onNavigate }) => {
                         </a>
                       </li>
                       <li>
-                        <a 
-                          href="#prizes" 
+                        <a
+                          href="#prizes"
                           onClick={closeMenu}
                           className="flex items-center px-4 py-2.5 text-gray-700 hover:text-blue-600 hover:bg-blue-50 transition-colors"
                         >
@@ -176,8 +212,8 @@ const Hero = ({ onNavigate }) => {
                         </a>
                       </li>
                       <li>
-                        <a 
-                          href="#sponsors" 
+                        <a
+                          href="#sponsors"
                           onClick={closeMenu}
                           className="flex items-center px-4 py-2.5 text-gray-700 hover:text-blue-600 hover:bg-blue-50 transition-colors"
                         >
@@ -187,37 +223,73 @@ const Hero = ({ onNavigate }) => {
                           <span className="text-sm font-medium">Sponsors</span>
                         </a>
                       </li>
-                      
+
                       {/* Themes Section */}
-                      <li className="border-t border-gray-200 mt-1 pt-1">
-                        <div className="px-4 py-2">
-                          <p className="text-xs font-semibold text-gray-500 mb-2">Themes</p>
-                          <div className="space-y-1">
-                            {Object.entries(themes).map(([key, themeOption]) => (
-                              <button
-                                key={key}
-                                onClick={() => {
-                                  switchTheme(key);
-                                  closeMenu();
-                                }}
-                                className={`w-full text-left px-2 py-1 rounded text-xs transition-colors ${
-                                  currentTheme === key
-                                    ? 'bg-blue-100 text-blue-600 font-medium'
-                                    : 'text-gray-600 hover:bg-gray-50'
-                                }`}
-                              >
-                                {themeOption.name}
-                              </button>
-                            ))}
+                      <li className="border-t border-gray-200 mt-2 pt-3">
+                        <div className="px-4 py-1">
+                          <div className="flex items-center gap-2 mb-3">
+                            <svg className="w-4 h-4 text-purple-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4.098 19.902a3.75 3.75 0 005.304 0l6.401-6.402M6.75 21A3.75 3.75 0 013 17.25V4.125C3 3.504 3.504 3 4.125 3h5.25c.621 0 1.125.504 1.125 1.125v4.072M6.75 21a3.75 3.75 0 003.75-3.75V8.197M6.75 21h13.125c.621 0 1.125-.504 1.125-1.125v-5.25c0-.621-.504-1.125-1.125-1.125h-4.072M10.5 8.197l2.88-2.88c.438-.439 1.15-.439 1.59 0l3.712 3.713c.44.44.44 1.152 0 1.59l-2.879 2.88M6.75 17.25v.75" />
+                            </svg>
+                            <p className="text-xs font-semibold text-gray-700 uppercase tracking-wide">Themes</p>
+                          </div>
+                          <div className="grid grid-cols-2 gap-2">
+                            {Object.entries(themes).map(([key, themeOption]) => {
+                              const getThemeIcon = (themeKey) => {
+                                const iconClass = currentTheme === themeKey ? 'text-white' : 'text-gray-500';
+                                switch(themeKey) {
+                                  case 'grid':
+                                    return <svg className={`w-3 h-3 ${iconClass}`} fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 5a1 1 0 011-1h4a1 1 0 011 1v4a1 1 0 01-1 1H5a1 1 0 01-1-1V5zM14 5a1 1 0 011-1h4a1 1 0 011 1v4a1 1 0 01-1 1h-4a1 1 0 01-1-1V5zM4 15a1 1 0 011-1h4a1 1 0 011 1v4a1 1 0 01-1 1H5a1 1 0 01-1-1v-4zM14 15a1 1 0 011-1h4a1 1 0 011 1v4a1 1 0 01-1 1h-4a1 1 0 01-1-1v-4z" /></svg>;
+                                  case 'emerald':
+                                    return <svg className={`w-3 h-3 ${iconClass}`} fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z" /></svg>;
+                                  case 'amber':
+                                    return <svg className={`w-3 h-3 ${iconClass}`} fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z" /></svg>;
+                                  case 'rose':
+                                    return <svg className={`w-3 h-3 ${iconClass}`} fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" /></svg>;
+                                  case 'purple':
+                                    return <svg className={`w-3 h-3 ${iconClass}`} fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 3v4M3 5h4M6 17v4m-2-2h4m5-16l2.286 6.857L21 12l-5.714 2.143L13 21l-2.286-6.857L5 12l5.714-2.143L13 3z" /></svg>;
+                                  case 'redMatrix':
+                                    return <svg className={`w-3 h-3 ${iconClass}`} fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 9l3 3-3 3m5 0h3M5 20h14a2 2 0 002-2V6a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" /></svg>;
+                                  default:
+                                    return <div className={`w-2 h-2 rounded-full ${currentTheme === themeKey ? 'bg-white' : 'bg-gray-400'}`}></div>;
+                                }
+                              };
+                              
+                              return (
+                                <button
+                                  key={key}
+                                  onClick={() => {
+                                    switchTheme(key);
+                                    closeMenu();
+                                  }}
+                                  className={`w-full text-left px-3 py-2 rounded-lg text-xs font-medium transition-all duration-200 ${currentTheme === key
+                                      ? 'bg-gradient-to-r from-blue-500 to-purple-600 text-white shadow-md transform scale-105'
+                                      : 'text-gray-600 hover:bg-gray-100 hover:text-gray-800 border border-gray-200 hover:border-gray-300'
+                                    }`}
+                                >
+                                  <div className="flex items-center gap-2">
+                                    {getThemeIcon(key)}
+                                    <span className="truncate">{themeOption.name}</span>
+                                  </div>
+                                </button>
+                              );
+                            })}
                           </div>
                         </div>
                       </li>
-                      
+
                       {/* Credits Section */}
                       <li className="border-t border-gray-200 mt-1 pt-1">
                         <div className="px-4 py-2 text-center">
                           <p className="text-xs text-gray-400 mb-1">Made by</p>
-                          <p className="text-xs font-semibold text-blue-600">krishmhatre</p>
+                          <a
+                            href="https://github.com/T2-Astra"
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="text-xs font-semibold text-blue-600 hover:text-blue-800 transition-colors cursor-pointer"
+                          >
+                            Krish Mhatre
+                          </a>
                         </div>
                       </li>
                     </ul>
@@ -343,8 +415,8 @@ const Hero = ({ onNavigate }) => {
               {/* Main Heading */}
               <div className="mb-6">
                 <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold tracking-tight mb-2">
-                  <span className={`font-medium transition-colors duration-300 ${isMatrix ? 'text-cyan-400 animate-pulse' : 'text-gray-900'}`}>Build the </span>
-                  <span className={isMatrix ? 'text-yellow-400 bg-gradient-to-r from-yellow-400 via-orange-400 to-red-400 bg-clip-text text-transparent animate-shimmer bg-[length:200%_100%]' : 'bg-gradient-to-r bg-[200%_auto] bg-clip-text leading-tight text-transparent transition-all duration-300 from-neutral-900 via-slate-500 to-neutral-500'}>Future</span>
+                  <span className={`font-medium transition-colors duration-300 ${isMatrix ? 'text-cyan-400 animate-pulse' : isDarkGrid ? 'text-gray-300' : 'text-gray-900'}`}>Build the </span>
+                  <span className={isMatrix ? 'text-yellow-400 bg-gradient-to-r from-yellow-400 via-orange-400 to-red-400 bg-clip-text text-transparent animate-shimmer bg-[length:200%_100%]' : isDarkGrid ? 'bg-gradient-to-r bg-clip-text leading-tight text-transparent transition-all duration-300 from-gray-400 via-gray-500 to-gray-600' : 'bg-gradient-to-r bg-[200%_auto] bg-clip-text leading-tight text-transparent transition-all duration-300 from-neutral-900 via-slate-500 to-neutral-500'}>Future</span>
                 </h1>
               </div>
 
@@ -459,7 +531,7 @@ const Hero = ({ onNavigate }) => {
 
           {/* CTA Buttons */}
           <div className="flex flex-col sm:flex-row items-center justify-center gap-3 sm:gap-4 px-4 sm:px-0">
-            <button 
+            <button
               onClick={() => onNavigate('register')}
               className="inline-flex items-center justify-center whitespace-nowrap gap-2 px-4 sm:px-8 py-3 text-sm sm:text-base font-medium shadow-lg transition-all duration-300 flex-1 sm:flex-none bg-slate-950 hover:bg-slate-900 text-white rounded-md cursor-pointer"
             >
@@ -471,7 +543,15 @@ const Hero = ({ onNavigate }) => {
               </svg>
               Register Here
             </button>
-            <button className="inline-flex items-center justify-center whitespace-nowrap gap-2 px-4 sm:px-8 py-3 text-sm sm:text-base font-medium shadow-lg transition-all duration-300 flex-1 sm:flex-none bg-white text-black hover:bg-gray-100 rounded-md cursor-pointer">
+            <button
+              onClick={() => {
+                const timelineSection = document.getElementById('timeline');
+                if (timelineSection) {
+                  timelineSection.scrollIntoView({ behavior: 'smooth' });
+                }
+              }}
+              className="inline-flex items-center justify-center whitespace-nowrap gap-2 px-4 sm:px-8 py-3 text-sm sm:text-base font-medium shadow-lg transition-all duration-300 flex-1 sm:flex-none bg-white text-black hover:bg-gray-100 rounded-md cursor-pointer"
+            >
               <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="h-4 sm:h-5 w-4 sm:w-5">
                 <path d="m18 16 4-4-4-4" />
                 <path d="m6 8-4 4 4 4" />
@@ -482,22 +562,22 @@ const Hero = ({ onNavigate }) => {
           </div>
 
           {/* Stats */}
-          <div className="flex items-center justify-center gap-6 sm:gap-8 md:gap-12 mt-16 sm:mt-24 md:mt-40 lg:mt-48 pt-6 sm:pt-8 border-t transition-all duration-300 border-gray-300">
+          <div className={`flex items-center justify-center gap-6 sm:gap-8 md:gap-12 mt-16 sm:mt-24 md:mt-40 lg:mt-48 pt-6 sm:pt-8 border-t transition-all duration-300 ${isMatrix ? 'border-green-500/30' : isDarkGrid ? 'border-gray-600' : 'border-gray-300'}`}>
             <div className="text-center">
-              <div className="text-xl sm:text-2xl font-bold transition-colors duration-300 text-gray-900">500+</div>
-              <div className="text-xs sm:text-sm transition-colors duration-300 text-gray-600">Participants</div>
+              <div className={`text-xl sm:text-2xl font-bold transition-colors duration-300 ${isMatrix ? 'text-green-400' : isDarkGrid ? 'text-gray-300' : 'text-gray-900'}`}>500+</div>
+              <div className={`text-xs sm:text-sm transition-colors duration-300 ${isMatrix ? 'text-green-300' : isDarkGrid ? 'text-gray-400' : 'text-gray-600'}`}>Participants</div>
             </div>
             <div className="text-center">
-              <div className="text-xl sm:text-2xl font-bold transition-colors duration-300 text-gray-900">48</div>
-              <div className="text-xs sm:text-sm transition-colors duration-300 text-gray-600">Hours</div>
+              <div className={`text-xl sm:text-2xl font-bold transition-colors duration-300 ${isMatrix ? 'text-green-400' : isDarkGrid ? 'text-gray-300' : 'text-gray-900'}`}>48</div>
+              <div className={`text-xs sm:text-sm transition-colors duration-300 ${isMatrix ? 'text-green-300' : isDarkGrid ? 'text-gray-400' : 'text-gray-600'}`}>Hours</div>
             </div>
             <div className="text-center">
-              <div className="text-xl sm:text-2xl font-bold transition-colors duration-300 text-gray-900">$50K</div>
-              <div className="text-xs sm:text-sm transition-colors duration-300 text-gray-600">Prize Pool</div>
+              <div className={`text-xl sm:text-2xl font-bold transition-colors duration-300 ${isMatrix ? 'text-green-400' : isDarkGrid ? 'text-gray-300' : 'text-gray-900'}`}>$50K</div>
+              <div className={`text-xs sm:text-sm transition-colors duration-300 ${isMatrix ? 'text-green-300' : isDarkGrid ? 'text-gray-400' : 'text-gray-600'}`}>Prize Pool</div>
             </div>
             <div className="text-center">
-              <div className="text-xl sm:text-2xl font-bold transition-colors duration-300 text-gray-900">20+</div>
-              <div className="text-xs sm:text-sm transition-colors duration-300 text-gray-600">Sponsors</div>
+              <div className={`text-xl sm:text-2xl font-bold transition-colors duration-300 ${isMatrix ? 'text-green-400' : isDarkGrid ? 'text-gray-300' : 'text-gray-900'}`}>20+</div>
+              <div className={`text-xs sm:text-sm transition-colors duration-300 ${isMatrix ? 'text-green-300' : isDarkGrid ? 'text-gray-400' : 'text-gray-600'}`}>Sponsors</div>
             </div>
           </div>
         </div>

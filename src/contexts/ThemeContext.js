@@ -13,27 +13,28 @@ export const useTheme = () => {
 
 export const themes = {
   grid: {
-    name: 'Grid Pattern',
+    name: 'Grid',
     background: '#f8fafc',
     style: {
-      backgroundImage: `linear-gradient(to right, rgba(148, 163, 184, 0.3) 1px, transparent 1px),
-                       linear-gradient(to bottom, rgba(148, 163, 184, 0.3) 1px, transparent 1px)`,
-      backgroundSize: "24px 24px",
+      backgroundImage: `linear-gradient(to right, #e2e8f0 1px, transparent 1px),
+                       linear-gradient(to bottom, #e2e8f0 1px, transparent 1px)`,
+      backgroundSize: "20px 30px",
+      WebkitMaskImage: "radial-gradient(ellipse 70% 80% at 50% 0%, #000 70%, transparent 100%)",
+      maskImage: "radial-gradient(ellipse 70% 80% at 50% 0%, #000 70%, transparent 100%)",
     }
   },
   emerald: {
-    name: 'Dual Gradient',
-    background: 'white',
+    name: 'G-Dark',
+    background: '#000000',
     style: {
-      backgroundImage: `linear-gradient(to right, rgba(203,213,225,0.9) 1px, transparent 1px),
-                       linear-gradient(to bottom, rgba(203,213,225,0.9) 1px, transparent 1px),
-                       radial-gradient(circle 500px at 0% 20%, rgba(139,92,246,0.6), transparent),
-                       radial-gradient(circle 500px at 100% 0%, rgba(59,130,246,0.6), transparent)`,
-      backgroundSize: "48px 48px, 48px 48px, 100% 100%, 100% 100%",
+      background: "#000000",
+      backgroundImage: `linear-gradient(to right, rgba(75, 85, 99, 0.4) 1px, transparent 1px),
+                       linear-gradient(to bottom, rgba(75, 85, 99, 0.4) 1px, transparent 1px)`,
+      backgroundSize: "40px 40px",
     }
   },
   amber: {
-    name: 'Amber Glow',
+    name: 'Amber',
     background: 'white',
     style: {
       backgroundImage: `radial-gradient(125% 125% at 50% 90%, #ffffff 30%, #f59e0b 100%)`,
@@ -41,7 +42,7 @@ export const themes = {
     }
   },
   rose: {
-    name: 'Rose Glow',
+    name: 'Rose',
     background: 'white',
     style: {
       backgroundImage: `radial-gradient(125% 125% at 50% 90%, #ffffff 30%, #e11d48 100%)`,
@@ -49,7 +50,7 @@ export const themes = {
     }
   },
   purple: {
-    name: 'Purple Glow',
+    name: 'Purple',
     background: 'white',
     style: {
       background: "radial-gradient(125% 125% at 50% 90%, #fff 30%, #7c3aed 100%)",
@@ -74,11 +75,14 @@ export const ThemeProvider = ({ children }) => {
     setCurrentTheme(themeName);
   };
 
-  // Apply body background color for Matrix theme
+  // Apply body background color for Matrix and Dark Grid themes
   React.useEffect(() => {
     if (currentTheme === 'redMatrix') {
       document.body.style.backgroundColor = '#000800';
-      document.body.style.color = '#00ff55'; // Even brighter Matrix green
+      document.body.style.color = '#00ff55';
+    } else if (currentTheme === 'emerald') {
+      document.body.style.backgroundColor = '#000000';
+      document.body.style.color = '#ffffff';
     } else {
       document.body.style.backgroundColor = '';
       document.body.style.color = '';
@@ -91,11 +95,14 @@ export const ThemeProvider = ({ children }) => {
     };
   }, [currentTheme]);
 
+  // Only apply theme styles to whole website for Matrix and Dark Grid themes
+  const shouldApplyGlobalTheme = currentTheme === 'redMatrix' || currentTheme === 'emerald';
+
   return (
     <ThemeContext.Provider value={{ currentTheme, switchTheme, themes }}>
       {/* Render MatrixRain component when redMatrix theme is active */}
       {currentTheme === 'redMatrix' && <MatrixRain />}
-      <div style={themes[currentTheme].style}>
+      <div style={shouldApplyGlobalTheme ? themes[currentTheme].style : {}}>
         {children}
       </div>
     </ThemeContext.Provider>
