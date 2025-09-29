@@ -1,4 +1,4 @@
-# HackFest 2025 - Hackathon Websi
+# HackFest 2025 - Hackathon Webs
 
 A modern, responsive hackathon website built with **React** and **Tailwind CSS** featuring a beautiful grid background pattern and smooth animations.  
 
@@ -30,5 +30,6 @@ npm install
 
 # Start the development server
 npm start
+
 
 
